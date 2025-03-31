@@ -2,17 +2,40 @@
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import axios from "axios"
-import React, { useState } from "react"
+import React, { useEffect, useState } from "react"
+import toast from "react-hot-toast";
 
 export default function Loginpage() {
 
+    const router = useRouter();
     const [user, setUser] = useState({
         email: "" ,
         password: "" 
     })
-    const onLogin = async () =>{
 
+    const [buttonDisabled ,setButtonDisabled] = useState(true);
+    
+        useEffect(()=>{
+            if(user.email.length>0 && user.password.length>0){
+                setButtonDisabled(false)
+            }else{
+                setButtonDisabled(true)
+            }
+        },[user])
+
+        
+    const onLogin = async () =>{
+        try {
+
+           const response = axios.post("/api/users/login",user);
+           toast.success("Login Success");
+           router.push("/profile")
+            
+        } catch (error: any) {
+            toast.error(error.message)
+        }
     }
+
 
     return (
         <>
@@ -46,7 +69,7 @@ export default function Loginpage() {
                 <button 
                     onClick={onLogin}
                     className="p-3 border border-gray-300 rounded-lg mb-4 focus:outline-none focus:border-gray-600">
-                    Log In
+                    {buttonDisabled ? "No Login In" : "Log In"}
                 </button>
 
                 <Link href='/signup'> To Signup Page </Link>
@@ -54,3 +77,4 @@ export default function Loginpage() {
         </>
     )
 }
+
