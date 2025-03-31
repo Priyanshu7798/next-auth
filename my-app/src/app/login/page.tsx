@@ -3,7 +3,8 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import axios from "axios"
 import React, { useEffect, useState } from "react"
-import toast from "react-hot-toast";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 export default function Loginpage() {
 
@@ -27,7 +28,7 @@ export default function Loginpage() {
     const onLogin = async () =>{
         try {
 
-           const response = axios.post("/api/users/login",user);
+           const response = await axios.post("/api/users/login",user);
            toast.success("Login Success");
            router.push("/profile")
             
@@ -39,6 +40,7 @@ export default function Loginpage() {
 
     return (
         <>
+            <Toaster/>
             <div className="flex flex-col items-center justify-center min-h-screen py-2 text-2xl">
                 Login Page
 

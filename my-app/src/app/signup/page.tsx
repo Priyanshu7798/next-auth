@@ -4,7 +4,8 @@ import React, { useEffect, useState } from "react"
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
-import toast from "react-hot-toast";
+import toast, { Toaster } from 'react-hot-toast';
+
 
 
 export default function SignupPage() {
@@ -42,6 +43,7 @@ export default function SignupPage() {
 
     return (
         <>
+            <Toaster />
             <div className="flex flex-col items-center justify-center min-h-screen py-2 text-2xl">
                 Signup Page
 
